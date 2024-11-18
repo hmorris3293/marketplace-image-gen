@@ -23,7 +23,6 @@
         src: "/tmp/packer.zip"
         dest: "/usr/local/bin/"
         remote_src: yes
-      notify: Remove Packer Zip
 
     - name: Verify Packer installation
       command: "packer --version"
