@@ -18,7 +18,7 @@ trap "cleanup $? $LINENO" EXIT
 
 # git repo
 export GIT_REPO="https://github.com/hmorris3293/marketplace-image-gen.git"
-export WORK_DIR="/tmp/arketplace-image-gen" 
+export WORK_DIR="/tmp/marketplace-image-gen" 
 export MARKETPLACE_APP="apps/linode-marketplace-lamp"
 
 # enable logging
