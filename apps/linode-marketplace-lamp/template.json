@@ -1,0 +1,14 @@
+{
+    "variables": {
+      "linode_token": "{{env `TOKEN_PASSWORD`}}"
+    },
+    "builders": [
+      {
+        "type": "linode",
+        "token": "{{user `token_password`}}",
+        "image": "linode/ubuntu22.04",
+        "region": "us-east",
+        "size": "g6-standard-2"
+      }
+    ]
+  }

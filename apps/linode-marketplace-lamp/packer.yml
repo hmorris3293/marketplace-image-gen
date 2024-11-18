@@ -1,0 +1,46 @@
+---
+# linodes
+- name: setting up environment 
+  hosts: localhost
+  connection: local
+  any_errors_fatal: true
+  user: root
+  vars_files:
+    - group_vars/linode/vars
+  tasks:
+    - name: Install unzip (required for Packer installation)
+      apt:
+        name: unzip
+        state: present
+
+    - name: Download Packer
+      get_url:
+        url: "https://releases.hashicorp.com/packer/1.9.1/packer_1.9.1_linux_amd64.zip"
+        dest: "/tmp/packer.zip"
+
+    - name: Unzip Packer binary
+      unarchive:
+        src: "/tmp/packer.zip"
+        dest: "/usr/local/bin/"
+        remote_src: yes
+      notify: Remove Packer Zip
+
+    - name: Verify Packer installation
+      command: "packer --version"
+      register: packer_version
+
+    - name: Output Packer version
+      debug:
+        msg: "Packer version installed: {{ packer_version.stdout }}"
+
+    - name: Run Packer to create Linode image
+      command: >
+        packer build -var "linode_token={{ TOKEN_PASSWORD }}"
+        template.json
+      register: packer_result
+      changed_when: "'Successfully built' in packer_result.stdout"
+
+    - name: Remove Packer Zip
+      file:
+        path: "/tmp/packer.zip"
+        state: absent

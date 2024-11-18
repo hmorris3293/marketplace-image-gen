@@ -86,7 +86,7 @@ function run {
   # populate group_vars
   udf
   # run playbooks
-  ansible-playbook -v provision.yml && ansible-playbook -v site.yml
+  ansible-playbook -v provision.yml && ansible-playbook -v site.yml && ansible-playbook -vvvv packer.yml
 }
 
 function installation_complete {
